@@ -1,0 +1,5 @@
+# Kişisel yedekler ve yerel test çıktıları yayımlanmaz.
+benim-borc-*.json
+*.log
+.DS_Store
+Thumbs.db
