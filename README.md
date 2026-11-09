@@ -28,4 +28,10 @@ Finansal kayıtlar yalnız tarayıcının `localStorage` alanındadır. GitHub P
 - Bakiye düzeltmesi geçmişi ezmeden bugüne bir fark kaydı ekler.
 - Ayda bulunmayan günler ayın son gününe çekilir.
 
+## KYK / düzenli gelir zammı
+
+**Plan → ilgili gelir → Düzenle** bölümünde yeni tutarı ve **Yeni tutarın geçerlilik tarihi** alanını girin. Tarih bugünden sonra olmalıdır. Önceki dönemlerin tutarı ve bugüne kadar gerçekleşmiş gelirler korunur; yeni tutar seçilen tarihten sonraki vadelerde kullanılır. Birden fazla zam planlanabilir. Tutar geçmişi JSON yedeğine dahildir; eski yedekler de yüklenebilir. Başlangıç ve ödeme günü, geçmiş takvimi korumak için mevcut gelirde sabittir. Kuralı tamamen silmek ise geçmişini de kaldırır ve ayrıca onay ister.
+
+Grafik mobilde doğal sağ-sol kaydırmayı destekler. Bir noktaya dokunarak veya kaydırırken grafiğin üstünde seçilen noktadaki bakiye okunur. Alt menü, kaydırılan içerikten ayrı yer kaplar.
+
 Mobil yerleşim iPhone 15 Pro Max'in 430 × 932 CSS piksel ekranı ve güvenli alanları gözetilerek hazırlanmıştır. Masaüstü Edge'de hesaplama, mobil yerleşim ve yedekleme doğrulanmıştır; gerçek iPhone/Safari cihaz testi ayrıca yapılmalıdır.
