@@ -1,7 +1,7 @@
 /* Yalnız uygulama dosyaları önbelleğe alınır; finansal kayıtlar localStorage'dan çıkmaz.
    Sürüm değiştiğinde bu adı artırmak, eski arayüz önbelleğinin temizlenmesini sağlar. */
 'use strict';
-const PREFIX='benim-borc-shell-',CACHE=PREFIX+'2026-11-09-v1';
+const PREFIX='benim-borc-shell-',CACHE=PREFIX+'2026-11-09-v2';
 const ROOT=new URL('./',self.location.href),INDEX=new URL('index.html',ROOT).href;
 const FILES=['./','index.html','manifest.webmanifest','icon-180.png','icon-192.png','icon-512.png'].map(p=>new URL(p,ROOT).href);
 self.addEventListener('install',event=>event.waitUntil((async()=>{
