@@ -1,0 +1,12 @@
+name = "benim-borc"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+workers_dev = true
+preview_urls = false
+
+[[d1_databases]]
+binding = "DB"
+database_name = "benim-borc"
+database_id = "8026a449-e15b-4f5f-b71e-398fe347251a"
+
+# TOKEN gizli değişkendir: `wrangler secret put TOKEN` ile ayarlanır, bu dosyada yer almaz.

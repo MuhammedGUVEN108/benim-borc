@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Benim Borç · Para Takibi",
   "short_name": "Benim Borç",
-  "description": "Kayıtları yalnız cihazında tutan borç ve nakit akışı defteri.",
+  "description": "Borç ve nakit akışı defteri; isteğe bağlı Claude eşitlemesi.",
   "lang": "tr-TR",
   "start_url": "./",
   "scope": "./",
