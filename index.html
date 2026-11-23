@@ -103,8 +103,10 @@ async function syncNow(){
  }catch(e){setSync(e.fatal?'error':'offline',e.fatal?e.message:'')}
  finally{syncBusy=false;if(syncAgain){syncAgain=false;scheduleSync()}}
 }
+// Yapıştırılan metin imza/link içerebilir: içindeki anahtar parçası ayıklanır.
+function tokenFrom(text){text=String(text||'').trim();const m=text.match(/#anahtar=([A-Za-z0-9_-]{32,200})/)||text.match(/(?:^|[^A-Za-z0-9_-])([A-Za-z0-9_-]{32,200})(?![A-Za-z0-9_-])/);return m?m[1]:text}
 async function connectSync(token){
- token=String(token||'').trim().replace(/^.*#anahtar=/,'');
+ token=tokenFrom(token);
  if(!/^[A-Za-z0-9_-]{32,200}$/.test(token))throw Error('Anahtar geçersiz görünüyor. Tamamını kopyaladığından emin ol.');
  if(!navigator.onLine)throw Error('Bağlanmak için internet gerekli.');
  const r=await syncFetch('GET',null,token);
@@ -116,7 +118,7 @@ function syncSheet(prefill=''){
  openSheet('Claude eşitlemesi',`<p class="help" style="margin-top:16px">Sana verilen eşitleme anahtarını yapıştır. Yalnız bir kez girilir; şifre sorulmaz. Anahtarı kimseyle paylaşma.</p><label for="syncToken">Eşitleme anahtarı</label><input id="syncToken" value="${esc(prefill)}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Anahtarı yapıştır">${navigator.clipboard?.readText?'<button type="button" class="text-btn" id="pasteToken">Panodan yapıştır</button>':''}<p class="error" id="syncErr" role="alert"></p><div class="form-actions"><button type="button" class="secondary" data-action="close">Vazgeç</button><button type="button" class="primary" id="doConnect">Bağlan</button></div>`);
  $('#pasteToken')&&($('#pasteToken').onclick=async()=>{try{$('#syncToken').value=(await navigator.clipboard.readText()).trim()}catch(e){$('#syncErr').textContent='Panoya erişilemedi; alana uzun basıp Yapıştır de.'}});
  $('#doConnect').onclick=async()=>{const btn=$('#doConnect');btn.disabled=true;$('#syncErr').textContent='';try{const token=$('#syncToken').value,r=await connectSync(token);if(typeof r==='string'){closeSheet();render();toast(r);return}
-   const t=String(token).trim().replace(/^.*#anahtar=/,'');
+   const t=tokenFrom(token);
    openSheet('Hangi defter kullanılsın?',`<p class="help" style="margin-top:16px">Sunucuda zaten bir defter var (${r.state.expenses.length} harcama, ${r.state.incomes.length} gelir, ${r.state.rules.length+r.state.payments.length} plan). Bu telefonda da farklı kayıtlar var (${state.expenses.length} harcama, ${state.incomes.length} gelir, ${state.rules.length+state.payments.length} plan).</p><div class="section"><button class="primary full" id="useRemote">Sunucudakini kullan</button><p class="help">Bu telefondaki kayıtların yerini sunucudaki defter alır.</p></div><div class="section"><button class="secondary full" id="useLocal">Bu telefondakini sunucuya yükle</button><p class="help">Sunucudaki defterin yerini bu telefondaki kayıtlar alır. Eski sunucu sürümü Claude ile geri alınabilir.</p></div>`);
    $('#useRemote').onclick=()=>{sync={token:t,rev:r.rev,dirty:false};saveSync();applyRemote(r.state,r.rev);setSync('ok');closeSheet();tab='home';render();toast('Sunucudaki defter yüklendi.')};
    $('#useLocal').onclick=()=>{sync={token:t,rev:r.rev,dirty:true};saveSync();saveBase(r.state);closeSheet();render();syncNow();toast('Bu telefondaki kayıtlar sunucuya gönderiliyor.')};
